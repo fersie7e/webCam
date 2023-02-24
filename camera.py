@@ -1,16 +1,22 @@
 import streamlit as st
-from PIL import Image
 
-with st.expander("start_camera"):
-    camera_image = st.camera_input("camera")
+from converter import convert_image
 
+st.subheader("Color to Grayscale Converter")
+
+# Create a file uploader component allowing the user to upload a file
+uploaded_image = st.file_uploader("Upload Image")
+
+with st.expander("Start camera"):
+    camera_image = st.camera_input("Camera")
 
 if camera_image:
-    # Create a pillow image instance
-    img = Image.open(camera_image)
+    # Supply camera_image to convert_image to get the grayscale version
+    gray_camera_image = convert_image(camera_image)
+    st.image(gray_camera_image)
 
-    # Convert the pillow to grayScale
-    gray_img = img.convert("L")
-
-    # Render de image on the web page
-    st.image(gray_img)
+# Check if the image exists meaning the user has uploaded a file
+if uploaded_image:
+    # Supply camera_image to convert_image to get the grayscale version
+    gray_uploaded_image = convert_image(uploaded_image)
+    st.image(gray_uploaded_image)
